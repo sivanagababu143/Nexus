@@ -149,6 +149,23 @@ run_as_user="nexus"
 
 #ln -s /opt/nexus/bin/nexus /etc/init.d/nexus
 
+sudo vi /etc/systemd/system/nexus.service
+
+[Unit]
+Description=nexus service
+After=network.target
+
+[Service]
+Type=forking
+LimitNOFILE=65536
+ExecStart=/opt/nexus/bin/nexus start
+ExecStop=/opt/nexus/bin/nexus stop
+User=nexus
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
 
 step 16: Switch as a nexus user and start the nexus service as follows.
 
